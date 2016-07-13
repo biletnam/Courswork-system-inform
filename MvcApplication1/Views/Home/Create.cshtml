@@ -1,0 +1,483 @@
+﻿@using MvcApplication1
+@model MvcApplication1.Models.ComplexModelClientAndServies
+@{
+    ViewBag.Title = "Создание заказа";
+
+    if (Request["__SCROLLPOS"] != null && Request["__SCROLLPOS"] != String.Empty) 
+    {
+           int pos = Convert.ToInt32 (Request["__SCROLLPOS"]);
+           Response.Write("<body id=\"myBody\" " + "onload=\"javascript:myBody.scrollTop=" + pos + ";\">");
+    }
+    else 
+    {
+        Response.Write("<body id=\"myBody\">");
+    }
+}
+
+
+<script type="text/javascript">
+    window.onload = function () {
+        //alert("!!!");
+        document.myform.action = "~/Home/ProcessingOrder";
+    }
+
+ 
+    $(document).ready(function () {
+        $("#begin_date").datepicker({ minDate: -20, maxDate: "+1M +10D" });
+    });
+
+   
+</script>
+
+<style type="text/css">
+    .mytable {
+       border:1px solid black;
+       text-align:center;
+    }
+    .approved {
+        background-color:green;
+    }
+    .rejected {
+        background-color:red;
+    }
+    .pending {
+        background-color:lime;
+    }
+</style>
+
+<h2 align="center">Создание заказа</h2>
+
+
+    <div>
+    <fieldset>
+        @if (ViewBag.Id_client == null)
+        {
+            using (Html.BeginForm("ChoiceClient", "Home"))
+            {
+                @Html.DropDownList("Id_client", new SelectList(Model.ListClient, "Id_client", "FIO"), " --- Выберите --- ", new { onchange = "this.form.submit();" }) 
+            }
+        }
+        else
+        {
+            <p>
+                Клиент: @ViewBag.Id_client : @ViewBag.Name_client
+                @if(ViewBag.IdOrder!=null)
+                {
+                     <b>Заказ№@ViewBag.IdOrder</b>
+                }
+            </p>
+        
+
+            using (Html.BeginForm("ProcessingOrder", "Home", new { Id_client = ViewBag.Id_client, id = "myForm", IdOrder111 = ViewBag.IdOrder }))
+            {
+                 @Html.ValidationSummary(true)
+
+                 <legend>Оформление заказа</legend>
+                    <table class="mytable">
+                        <tr class="mytable">
+                            <th>
+                                Тип комнаты&nbsp;&nbsp;&nbsp;
+                            </th>
+                            <th>
+                                Количество мест в комнате&nbsp;&nbsp;&nbsp;
+                            </th>
+                            <th>
+                                Номер комнаты&nbsp;&nbsp;&nbsp;
+                            </th>
+                            @*
+                            <th>
+                                Количество человек&nbsp;&nbsp;&nbsp;
+                            </th>
+                            *@
+                            <th>
+                                Дата заселения&nbsp;&nbsp;&nbsp;
+                            </th>
+                            <th>
+                                Дата выселения&nbsp;&nbsp;&nbsp;
+                            </th>
+                            <th>
+                                Цена (грн.)&nbsp;&nbsp;&nbsp;
+                            </th>
+                            @*
+                            <th>
+                                Оплата&nbsp;&nbsp;&nbsp;
+                            </th>
+                            *@
+                        </tr>
+            
+                        @if (Model.llll.Count == 0)
+                        {
+                             <tr>
+                                <td style="padding-left:50px;" rowspan="2">
+                                    <b style="color:red;">Текущий заказ не заказали ни одного номера</b>
+                                <td>
+                            </tr>
+                        }
+                        else
+                        {
+                            foreach (var item in Model.llll)
+                            {
+                                <tr>
+                                    <td>
+                                        @item.type_room
+                                    </td>
+                                    <td>
+                                        @item.col_in_room
+                                    </td>
+                                    <td>
+                                        @item.number_room
+                                    </td>
+                                    @*
+                                    <td>
+                                        @item.col
+                                    </td>
+                                    *@
+                                    <td>
+                                        @item.settlement_date
+                                    </td>
+                                    <td>
+                                        @item.eviction_date
+                                    </td>
+                                    <td>
+                                        @item.price
+                                    </td>
+                                    @*
+                                    <td>
+                                        @item.
+                                    </td>
+                                    *@
+                                </tr>
+                            }
+                        }
+                </table>     
+                <br />                         
+                <table>
+                    @if (ViewBag.flagTypeRoom)
+                    {
+                        <tr style="border:3px solid green; margin:5px; background:yellow;">
+                            <td style="border:3px solid green; margin:5px; background:yellow; padding-left:50px;">
+                                Тип комнаты:&nbsp;&nbsp;&nbsp;
+                            </td>
+                            <td style="padding-left:50px;">
+                                <div>
+                                    @* @Html.DropDownList("Id_pool", new SelectList(Model.ListTypePool, "Id_pool", "type"), "-- Выберите --", new { onchange = @"this.form.submit();" })   *@
+
+                                    @Html.DropDownList("Id_pool", new SelectList(Model.ListTypePool, "Id_pool", "type"),  "-- Выберите --", new { onchange = @"this.form.submit();" })
+                                    
+                                    
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                    
+                    @if (ViewBag.flagColMest)
+                    {
+                        <tr style="border:3px solid green; margin:5px; background:yellow;">
+                            <td style="border:3px solid green; margin:5px; background:yellow; padding-left:50px;">
+                                Количество мест в комнате:&nbsp;&nbsp;&nbsp;
+                            </td>
+                            <td style="padding-left:50px;">
+                                <div>
+                                    @Html.DropDownList("Id", new SelectList(Model.ListNameTypeRoom, "Id", "name"), "-- Выберите --", new { onchange = @"this.form.submit();" })  
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                    
+                    @if (ViewBag.flagNumber)
+                    {
+                        <tr style="border:3px solid green; margin:5px; background:yellow;">
+                            <td style="border:3px solid green; margin:5px; background:yellow; padding-left:50px;">
+                                Выбор номера комнаты:&nbsp;&nbsp;&nbsp;
+                            </td>
+                            <td style="padding-left:50px;">
+                                <div>
+                                    @Html.DropDownList("Id_number", new SelectList(Model.ListNumber, "Id_number", "name"), "-- Выберите --", new { onchange = @"this.form.submit();" })  
+                                </div>
+                            </td>
+                        </tr>
+                    }
+
+                    @*
+                    @if (ViewBag.flagCol)
+                    {
+                            <tr style="border:3px solid green; margin:5px; background:yellow;">
+                                <td style="border:3px solid green; margin:5px; background:yellow; padding-left:50px;">
+                                    Количество человека&nbsp;&nbsp;&nbsp;
+                                </td>
+                                <td style="padding-left:50px;">
+                                    <div>
+                                        @Html.DropDownList("col", new[]
+                                        {
+                                            new SelectListItem() { Text = "--- Выберите ---", Value = ""},  
+                                            new SelectListItem() { Text = "1", Value = "1"},
+                                            new SelectListItem() { Text = "2", Value = "2"},
+                                            new SelectListItem() { Text = "3", Value = "3"},
+                                            new SelectListItem() { Text = "4", Value = "4"},
+                                            new SelectListItem() { Text = "5", Value = "5"},                                                                                                                                                        
+                                            new SelectListItem() { Text = "6", Value = "6"}
+                                        }
+                                        , new { onchange = @"this.form.submit();" })  
+                                    </div>
+                                </td>
+                             </tr>
+                        }
+                       *@
+
+                        @if (ViewBag.flagDateBegin)
+                        {
+                            <tr style="border:3px solid green; margin:5px; background:yellow;">
+                                <td style="border:3px solid green; margin:5px; background:yellow; padding-left:50px;">
+                                    Дата заселения:&nbsp;&nbsp;&nbsp;
+                                </td>
+                                <td style="padding-left:50px;">
+                                    <div> 
+                                        @Html.ValidationMessage("begin_date")<br/>
+                                        @* @Html.TextBox("begin_date", null, new { style = "width: 250px;", type = "date", onchange = @"this.form.submit();" }) *@
+                                        @Html.TextBox("begin_date", null, new { style = "width: 250px;", type = "date", onchange = @"this.form.submit();" })
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+
+                        @if (ViewBag.flagTimeBegin)
+                        {
+                            <tr style="border:3px solid green; margin:5px; background:yellow;">
+                                <td style="border:3px solid green; margin:5px; background:yellow; padding-left:50px;">
+                                    Время заселения:&nbsp;&nbsp;&nbsp;
+                                </td>
+                                <td style="padding-left:50px;">
+                                    <div> 
+                                        @Html.ValidationMessage("begin_time")<br/>
+                                        @Html.TextBox("begin_time", null, new { style = "width: 250px;", type = "time", ondblclick = @"this.form.submit();" })
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                        
+                        @if (ViewBag.flagDateEnd)
+                        {
+                            <tr style="border:3px solid green; margin:5px; background:yellow;">
+                                <td style="border:3px solid green; margin:5px; background:yellow; padding-left:50px;">
+                                    Дата выселения:&nbsp;&nbsp;&nbsp;
+                                </td>
+                                <td style="padding-left:50px;">
+                                    <div>
+                                        @Html.ValidationMessage("end_date")<br/>
+                                        @Html.TextBox("end_date", null, new { style = "width: 250px;", type = "date", onchange = @"this.form.submit();" })
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                        
+                        @if (ViewBag.flagTimeEnd)
+                        {
+                            <tr style="border:3px solid green; margin:5px; background:yellow;">
+                                <td style="border:3px solid green; margin:5px; background:yellow; padding-left:50px;">
+                                    Время выселения:&nbsp;&nbsp;&nbsp;
+                                </td>
+                                <td style="padding-left:50px;">
+                                    <div>
+                                        @Html.ValidationMessage("end_time")<br/>
+                                        @Html.TextBox("end_time", null, new { style = "width: 250px;", type = "time", ondblclick = @"this.form.submit();" })
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+
+                        @if (ViewBag.flagPrice)
+                        {
+                            <tr style="border:3px solid green; margin:5px; background:yellow;">
+                                <td style="border:3px solid green; margin:5px; background:yellow; padding-left:50px;">
+                                    Цена:
+                                </td>
+                                <td style="padding-left:50px;">
+                                    @Html.TextBox("price", null, new { @Value = @ViewBag.Price, style = "width: 100px; text-align: center: center;", disabled = "disabled" })
+                                </td>
+                            </tr>
+                        }
+
+                        @if (ViewBag.flagSmallButton)
+                        {
+                            <tr style="border:3px solid green; margin:5px; background:yellow;">
+                                <td style="padding-left:50px;" rowspan="2">
+                                </td>
+                                <td>
+                                    <input type="submit" name="submitbutton21" value="Принять" />
+                                </td>
+                            </tr>
+                        }
+                    </table>
+            
+                    <div>
+                        <h2>Дополнительные услуги</h2>
+                          <h3>Список оказанных услуг</h3>
+             
+                        
+                        @* @Html.ActionLink("dasdasdasdas", "Index", "Input", new { idOrder = ViewBag.IdOrder }, null); *@
+
+                        @using (Html.BeginForm("ServiesProccing", "Home", new { id_order = ViewBag.IdOrder }))
+                        {
+                            <table class="mytable">
+                            <tr class="mytable">
+                                <th>
+                                    Тип услуги
+                                </th>
+                                <th>
+                                    Дата использования
+                                </th>
+                                @*
+                                <th>
+                                    Время начала использования
+                                </th>
+                                *@
+                                <th>
+                                    Количество человек
+                                </th>
+                                <th>
+                                    Цена
+                                </th>
+                            </tr>
+                        @if (Model.ListTypeServies.Count == 0)
+                        {
+                             <tr>
+                                <td style="padding-left:50px;" rowspan="2">
+                                    <b style="color:red;">Текущий заказ не заказали ни одного номера</b>
+                                <td>
+                            </tr>
+                        }
+                        else
+                        {
+                            foreach (var item in Model.add_llll)
+                            {
+                                <tr>
+                                    <td>
+                                        @item.name_servies
+                                    </td>
+                                    <td>
+                                        @item.DateUse
+                                    </td>
+                                    <td>
+                                        @item.col
+                                    </td>
+                                    @*
+                                    <td>
+                                        @item.col
+                                    </td>
+                                    *@
+                                    <td>
+                                        @item.price
+                                    </td>
+                                    @*
+                                    <td>
+                                        @item.eviction_date
+                                    </td>
+                                    <td>
+                                        @item.price
+                                    </td>
+                                   
+                                    <td>
+                                        @item.
+                                    </td>
+                                    *@
+                                </tr>
+                            }
+                        }
+
+                            <tr>
+                                <td>
+                                    @* @Html.DropDownListFor("Id_servies", new SelectList("Id_servies", "name"), "-- Выберите --", new { onchange = @"this.form.submit();" })  *@
+
+                                    @* @Html.DropDownList("Id_servies", new SelectList(Model.ListTypeServies,"Id_servies", "name"), " --- Выберите --- ", new { onchange = "this.form.submit();" })  *@
+
+                                    @*
+                                    @{
+                                        System.Web.UI.WebControls.ListItem lst = new System.Web.UI.WebControls.ListItem("Add New", "0");
+                                        lst = new System.Web.UI.WebControls.ListItem("Id_servies", "1");
+                                        lst = new System.Web.UI.WebControls.ListItem("Id_servies", "2");
+                                        lst = new System.Web.UI.WebControls.ListItem("Id_servies", "3");
+                                    }
+                                    @Html.DropDownList("Id_servies", lst, new { onchange = "this.form.submit();" })
+                                  *@
+
+                                    @Html.DropDownList("Id_servies", new SelectList(Model.ListTypeServies,"Id_servies", "name"), " --- Выберите --- ", new { onchange = "this.form.submit();" }) 
+                                </td>
+                                
+                                @if (@ViewBag.flagServiesDate) 
+                                {
+                                    <td>
+                                        @Html.TextBox("dateUse", null, new { style = "width: 250px;", type = "date", onchange = @"this.form.submit();" })
+                                    </td>
+                                }
+                                
+                                @if(@ViewBag.flagTimeUse) 
+                                {
+                                    <td>
+                                        @Html.TextBox("timeUse", null, new { style = "width: 250px;", type = "time", ondblclick = @"this.form.submit();" })
+                                    </td>
+                                }
+
+                                @if(@ViewBag.flagColUse) 
+                                {
+                                    <td>
+                                        @Html.DropDownList("colServ", new[]
+                                        {
+                                            new SelectListItem() { Text = "--- Выберите ---", Value = ""},  
+                                            new SelectListItem() { Text = "1", Value = "1"},
+                                            new SelectListItem() { Text = "2", Value = "2"},
+                                            new SelectListItem() { Text = "3", Value = "3"},
+                                            new SelectListItem() { Text = "4", Value = "4"},
+                                            new SelectListItem() { Text = "5", Value = "5"},                                                                                                                                                        
+                                            new SelectListItem() { Text = "6", Value = "6"}
+                                        }
+                                        , new { onchange = @"this.form.submit();" })  
+                                    </td>
+                                }
+
+                                @if(@ViewBag.flagPriceServies) 
+                                {
+                                    <td>
+                                        @Html.TextBox("priceServies", null, new { @Value = @ViewBag.PriceServies, style = "width: 100px; text-align: center: center;", disabled = "disabled" })
+                                    </td>
+                                }
+                            </tr>
+                            @if(@ViewBag.flagServiesButton)
+                            {
+                                <tr>
+                                    <td>
+                                        <input type="submit" name="submitbuttonServies" id="submitbuttonServies"/>
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+    @* } *@
+            
+                   
+                    <br/>
+                    <h2>Итоги</h2>
+                    <hr/><br/>
+                    <p><b>Всего: @ViewBag.BigPrice</b></p>
+            
+                    <div>
+                        <h2>Оплата</h2>
+                        <hr/>
+                        @Html.CheckBox("payment") 
+                        <br/>
+                    </div>
+
+                    <p>
+                        <input type="submit" id="submitbuttonBigOrder" name="submitbuttonBigOrder"/>
+                    </p>
+                    }   
+                </div>
+
+            }
+        }
+    </fieldset>
+    </div>      
+    
+        <p>
+            @Html.ActionLink("Back to List", "Index")
+        </p>
+    
+}

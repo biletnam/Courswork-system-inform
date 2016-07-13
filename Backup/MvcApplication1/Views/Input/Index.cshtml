@@ -1,0 +1,78 @@
+﻿@model List<MvcApplication1.type_servies>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+ @using (Html.BeginForm("InputSevies", "Input", new { id_order = ViewBag.IdOrder }))
+ {
+            <table>
+                            <th>
+                                <td>
+                                    Тип услуги
+                                </td>
+                                <td>
+                                    Дата использования
+                                </td>
+                                <td>
+                                    Время начала использования
+                                </td>
+                                <td>
+                                    Количество человек
+                                </td>
+                                <td>
+                                    Цена
+                                </td>
+                            </th>
+                            <tr>
+                                <td>
+                                    @* @Html.DropDownListFor("Id_servies", new SelectList("Id_servies", "name"), "-- Выберите --", new { onchange = @"this.form.submit();" })  *@
+
+                                    @Html.DropDownList("id", new SelectList("id", "name"), " --- Выберите --- ", new { onchange = "this.form.submit();" }) 
+
+                                  
+
+
+                                </td>
+                                
+                                @* @if(@ViewBag.flagDateUse) *@
+                                {
+                                    <td>
+                                        @Html.TextBox("dateUse", null, new { style = "width: 250px;", type = "date", onchange = @"this.form.submit();" })
+                                    </td>
+                                }
+                                
+                                @* @if(@ViewBag.flagTimeUse) *@
+                                {
+                                    <td>
+                                        @Html.TextBox("timeUse", null, new { style = "width: 250px;", type = "time", ondblclick = @"this.form.submit();" })
+                                    </td>
+                                }
+
+                                @* @if(@ViewBag.flagColUse) *@
+                                {
+                                    <td>
+                                        @Html.DropDownList("col", new[]
+                                        {
+                                            new SelectListItem() { Text = "--- Выберите ---", Value = ""},  
+                                            new SelectListItem() { Text = "1", Value = "1"},
+                                            new SelectListItem() { Text = "2", Value = "2"},
+                                            new SelectListItem() { Text = "3", Value = "3"},
+                                            new SelectListItem() { Text = "4", Value = "4"},
+                                            new SelectListItem() { Text = "5", Value = "5"},                                                                                                                                                        
+                                            new SelectListItem() { Text = "6", Value = "6"}
+                                        }
+                                        , new { onchange = @"this.form.submit();" })  
+                                    </td>
+                                }
+
+                                @* @if(@ViewBag.flagPriceServies) *@
+                                {
+                                    <td>
+                                        @Html.TextBox("priceServies", null, new { @Value = @ViewBag.PriceServies, style = "width: 100px; text-align: center: center;", disabled = "disabled" })
+                                    </td>
+                                }
+                                
+                            </tr>
+                        </table>
+ }

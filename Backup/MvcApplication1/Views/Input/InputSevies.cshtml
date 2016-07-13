@@ -1,0 +1,11 @@
+﻿@model MvcApplication1.Models.TypeServies
+@{
+    ViewBag.Title = "InputSevies";
+}
+
+<h2>InputSevies</h2>
+<p><b>Заказ№ @ViewBag.IdOrder</b></p>
+ @using (Html.BeginForm("InputSevies", "Input", new { IdOrder = ViewBag.IdOrder }))
+ {
+    
+ }

@@ -1,0 +1,588 @@
+﻿@* @model string[][] *@
+@model MvcApplication1.Models.ForReport.ReportString
+
+@{
+    ViewBag.Title = "ReportOut";
+
+}
+
+<h2>Формирование отчет об использовании дополнительных услуг в зависимости от времени года и типа номера».</h2>
+
+@{
+    List<SelectListItem> listItems = new List<SelectListItem>();
+    List<SelectListItem> listItems2 = new List<SelectListItem>();
+    List<SelectListItem> listItems3 = new List<SelectListItem>();
+    
+    listItems.Add(new SelectListItem
+    {
+          Text = "Весна",
+          Value = "1",
+          Selected = true
+    });
+        
+   listItems.Add(new SelectListItem
+   {
+            Text = "Лето",
+            Value = "2"
+   });
+        
+   listItems.Add(new SelectListItem
+   {
+            Text = "Осень",
+            Value = "3"
+    });
+        
+   listItems.Add(new SelectListItem
+   {
+       Text = "Зима",
+       Value = "4"
+   });
+
+   
+   
+   listItems2.Add(new SelectListItem
+   {
+       Text = "2014",
+       Value = "1"
+   });
+
+   listItems2.Add(new SelectListItem
+   {
+       Text = "2015",
+       Value = "2"
+   });
+
+   listItems2.Add(new SelectListItem
+   {
+       Text = "2016",
+       Value = "3",
+       Selected = true
+   });
+
+
+   listItems3.Add(new SelectListItem
+   {
+       Text = "Люкс",
+       Value = "1",
+       Selected = true
+   });
+
+   listItems3.Add(new SelectListItem
+   {
+       Text = "Стандарт",
+       Value = "2"
+   });
+
+   listItems3.Add(new SelectListItem
+   {
+       Text = "Эконом-класс",
+       Value = "3"
+   });
+   
+}
+
+@{
+    
+    
+
+    string[] ServiecRus = new string[]
+        {
+            "Дискотека",
+            "Бар", 
+            "Салон красоты",
+            "Пляж",
+            "Итоги"
+                
+        };
+
+    string[] NumberRus = new string[]
+        {
+            "Люкс",
+            "Стандарт", 
+            "Эконом",
+            "Итоги"
+        };
+        
+     int ItogeCount = 0, ItogeSum = 0;
+<table style="padding:15px">        
+<tr>
+    <td>
+        <table style="border:1px solid black; padding:15px">   
+            <tr>
+                <td>
+                    <p>Полный тип комнаты и выбора сезона:</p>
+                    @Html.DropDownListFor(it => it.TTT, listItems, "-- Select Status --")
+                    @Html.DropDownListFor(it => it.TTT, listItems2, "-- Select Status --")
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table style="border:1px solid black; padding:15px">
+                    @* @for (int i = 0; i < Model.RRR.Length; i++) *@
+                    @for (int i = 0; i < Model.RRR.Length / 2; i++)
+                    {
+                        ViewBag.text = ServiecRus[i].ToString();
+                        <tr>
+                            <td>
+                                <b>@ViewBag.text: </b><br/>
+                            </td>
+                        </tr>
+
+                        for (int j = 0; j < Model.RRR[i].Length; j++)
+                        {
+                            ViewBag.text = NumberRus[j].ToString();
+            
+                            <tr> 
+                                <td>
+                                    <b>@ViewBag.text: </b><br/>
+                                </td>
+                                <td>
+                                    @Model.TTT[i][j]<br/>
+                                </td>
+
+                                @if (j == Model.TTT[i].Length - 1)
+                                {
+                                    ItogeCount += int.Parse(Model.TTT[i][j]);
+                                }
+        
+                                <td>
+                                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                </td>
+                                @if (j == Model.RRR[i].Length - 1)
+                                {
+                                    <td style="border:1px solid black;">
+                                        @Model.RRR[i][j]<br/>
+                                    </td>
+                                    ItogeSum += int.Parse(Model.RRR[i][j]);
+                                }
+                                else
+                                {
+                                    <td>
+                                        @Model.RRR[i][j]<br/>
+                                    </td>
+                                }
+
+                                @if (j == Model.RRR[i].Length - 2)
+                                {
+                                    <tr>
+                                        <td><hr/></td>
+                                    </tr>
+                                }  
+                            </tr>
+        
+                        }
+                        <tr>
+                            <td><hr/><br/></td>
+                        </tr>
+        
+        
+                        <br/>
+                    }
+                    </table>
+                </td>
+                <td>
+                    <br/>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                </td>
+                <td>
+                    <table style="border:1px solid black; padding:15px">
+                    @* @for (int i = 0; i < Model.RRR.Length; i++) *@
+                    @for (int i = 2; i < Model.RRR.Length; i++)
+                    {
+                        ViewBag.text = ServiecRus[i].ToString();
+                        <tr>
+                            <td>
+                                <b>@ViewBag.text: </b><br/>
+                            </td>
+                        </tr>
+
+                        for (int j = 0; j < Model.RRR[i].Length; j++)
+                        {
+                            ViewBag.text = NumberRus[j].ToString();
+            
+                            <tr> 
+                                <td>
+                                    <b>@ViewBag.text: </b><br/>
+                                </td>
+                                <td>
+                                    @Model.TTT[i][j]<br/>
+                                </td>
+
+                                @if (j == Model.TTT[i].Length - 1)
+                                {
+                                    ItogeCount += int.Parse(Model.TTT[i][j]);
+                                }
+        
+                                <td>
+                                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                </td>
+                                @if (j == Model.RRR[i].Length - 1)
+                                {
+                                    <td style="border:1px solid black;">
+                                        @Model.RRR[i][j]<br/>
+                                    </td>
+                                    ItogeSum += int.Parse(Model.RRR[i][j]);
+                                }
+                                else
+                                {
+                                    <td>
+                                        @Model.RRR[i][j]<br/>
+                                    </td>
+                                }
+
+                                @if (j == Model.RRR[i].Length - 2)
+                                {
+                                    <tr>
+                                        <td><hr/></td>
+                                    </tr>
+                                }  
+                            </tr>
+        
+                        }
+                        <tr>
+                            <td><hr/><br/></td>
+                        </tr>
+        
+        
+                        <br/>
+                    }
+                    </table> 
+                </td>
+                <td>
+                    <br/>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p><b>Общее количество: @ItogeCount</b></p>
+                    <p><b>Общая сумма: @ItogeSum (грн.)</b></p>
+                </td>
+            </tr>
+        </table>
+        @{ ItogeCount = 0; ItogeSum = 0; }
+    </td>
+    <td>
+        <table style="border:1px solid black; padding:5px">   
+            <tr>
+                <td>
+                    <table>
+                        <tr>
+                            <td>
+                                <p>Выбор типа комнаты и сезона:</p>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>
+                                Выбор типа команты: @Html.DropDownListFor(it => it.TTT, listItems3, "-- Select Status --")
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Выбор сезона: @Html.DropDownListFor(it => it.TTT, listItems, "-- Select Status --")
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Выбор года: @Html.DropDownListFor(it => it.TTT, listItems2, "-- Select Status --")
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table style="border:1px solid black; padding:15px">
+                    @* @for (int i = 0; i < Model.RRR.Length; i++) *@
+                    @for (int i = 0; i < Model.RRR.Length / 2; i++)
+                    {
+                        ViewBag.text = ServiecRus[i].ToString();
+                        <tr>
+                            <td>
+                                <b>@ViewBag.text: </b><br/>
+                            </td>
+                        </tr>
+
+                        @* for (int j = 0; j < Model.RRR[i].Length; j++) *@
+                        {
+                            int j = 0;
+                            ViewBag.text = NumberRus[j].ToString();
+            
+                            <tr> 
+                                <td>
+                                    <b>@ViewBag.text: </b><br/>
+                                </td>
+                                <td>
+                                    @Model.TTT[i][j]<br/>
+                                </td>
+
+                                @* @if (j == Model.TTT[i].Length - 1) *@
+                                @{
+                                    ItogeCount += int.Parse(Model.TTT[i][j]);
+                                }
+        
+                                <td>
+                                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                </td>
+                                @* @if (j == Model.RRR[i].Length - 1) *@
+                                @{
+                                    <td style="border:1px solid black;">
+                                        @Model.RRR[i][j]<br/>
+                                    </td>
+                                    ItogeSum += int.Parse(Model.RRR[i][j]);
+                                }
+                                @*
+                                else
+                                {
+                                    <td>
+                                        @Model.RRR[i][j]<br/>
+                                    </td>
+                                }
+                                *@
+                                @if (j == Model.RRR[i].Length - 2)
+                                {
+                                    <tr>
+                                        <td><hr/></td>
+                                    </tr>
+                                }  
+                            </tr>
+        
+                        }
+                        <tr>
+                            <td><hr/><br/></td>
+                        </tr>
+        
+        
+                        <br/>
+                    }
+                    </table>
+                </td>
+                <td>
+                    <br/>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                </td>
+                <td>
+                    <table style="border:1px solid black; padding:15px">
+                    @* @for (int i = 0; i < Model.RRR.Length; i++) *@
+                    @for (int i = 2; i < Model.RRR.Length; i++)
+                    {
+                        ViewBag.text = ServiecRus[i].ToString();
+                        <tr>
+                            <td>
+                                <b>@ViewBag.text: </b><br/>
+                            </td>
+                        </tr>
+
+                        @* for (int j = 0; j < Model.RRR[i].Length; j++) *@
+                        {
+                            int j = 0;
+                            ViewBag.text = NumberRus[j].ToString();
+            
+                            <tr> 
+                                <td>
+                                    <b>@ViewBag.text: </b><br/>
+                                </td>
+                                <td>
+                                    @Model.TTT[i][j]<br/>
+                                </td>
+
+                                @* @if (j == Model.TTT[i].Length - 1) *@
+                                @{
+                                    ItogeCount += int.Parse(Model.TTT[i][j]);
+                                }
+        
+                                <td>
+                                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                </td>
+                               @* @if (j == Model.RRR[i].Length - 1) *@
+                                @{
+                                    <td style="border:1px solid black;">
+                                        @Model.RRR[i][j]<br/>
+                                    </td>
+                                    ItogeSum += int.Parse(Model.RRR[i][j]);
+                                }
+                                @*
+                                else
+                                {
+                                    <td>
+                                        @Model.RRR[i][j]<br/>
+                                    </td>
+                                }
+                                *@
+                                @if (j == Model.RRR[i].Length - 2)
+                                {
+                                    <tr>
+                                        <td><hr/></td>
+                                    </tr>
+                                }  
+                            </tr>
+        
+                        }
+                        <tr>
+                            <td><hr/><br/></td>
+                        </tr>
+        
+        
+                        <br/>
+                    }
+                    </table> 
+                </td>
+                <td>
+                    <br/>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p><b>Общее количество: @ItogeCount</b></p>
+                    <p><b>Общая сумма: @ItogeSum (грн.)</b></p>
+                </td>
+            </tr>
+        </table>
+    </td>
+</tr>
+</table>
+    
+    
+    
+    
+   
+}
+
+
+@* ***
+@{
+    MvcApplication1.Models.ForReport.Calculations text = new MvcApplication1.Models.ForReport.Calculations();
+
+    string[] ServiecRus = new string[]
+        {
+            "Бар",
+            "Пляж", 
+            "Салон красоты",
+            "Дискотеки",
+            "Итоги"
+                
+        };
+
+    string[] NumberRus = new string[]
+        {
+            "Эконом-класс",
+            "Стандарт", 
+            "Люкс",
+            "Итоги"
+        };
+
+    <table>
+
+    @for (int i = 0; i < Model.Length; i++)
+    {
+        ViewBag.text = ServiecRus[i].ToString();
+        <tr>
+            <td>
+                <b>@ViewBag.text</b><br/>
+            </td>
+        </tr>
+
+        for (int j = 0; j < Model[i].Length; j++)
+        {
+            ViewBag.text = NumberRus[j].ToString();
+            <tr>            
+                <td>
+                    <b>@ViewBag.text</b><br/>
+                </td>
+                <td>
+                    @Model[i][j]<br/>
+                </td>
+            </tr>
+        }
+        <tr>
+            <td><br/></td>
+        </tr>
+        
+        
+        <br/>
+    }
+    </table>
+}
+**** *@
+
+
+
+@*
+@{
+
+   listItems.Add(new SelectListItem
+        {
+          Text = "Весна",
+          Value = "1"
+        });
+        
+   listItems.Add(new SelectListItem
+        {
+            Text = "Лето",
+            Value = "2",
+            Selected = true
+        });
+        
+   listItems.Add(new SelectListItem
+        {
+            Text = "Осень",
+            Value = "3"
+        });
+        
+   listItems.Add(new SelectListItem
+   {
+       Text = "Зима",
+       Value = "4"
+   });
+
+   
+   
+   listItems2.Add(new SelectListItem
+   {
+       Text = "Люкс",
+       Value = "1"
+   });
+
+   listItems2.Add(new SelectListItem
+   {
+       Text = "Стандарт",
+       Value = "2",
+       Selected = true
+   });
+
+   listItems2.Add(new SelectListItem
+   {
+       Text = "Экном-класс",
+       Value = "3"
+   });
+}
+
+@Html.DropDownListFor(it => it.name, listItems, "-- Select Status --")
+@Html.DropDownListFor(it => it.name, listItems2, "-- Select Status --")
+
+*@
+
+<table>
+    <tr>
+        <td>
+            <img src="~/Images/33.png" />
+        </td>
+   </tr>
+   <tr>
+        <td>
+            <img src="~/Images/44.png" />
+        </td>
+   </tr>
+   <tr>
+        <td>
+            <img src="~/Images/11.png" />
+        </td>
+   </tr>
+    <tr>
+        <td>
+            <img src="~/Images/22.png" />
+        </td>
+   </tr>
+<!--
+<img src="~/Images/33.png" />
+<img src="~/Images/44.png" />
+    -->
+</table>

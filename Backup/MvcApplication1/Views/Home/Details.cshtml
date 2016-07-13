@@ -1,0 +1,208 @@
+﻿@model MvcApplication1.Models.OrderAndServies
+@{
+    ViewBag.Title = "Details";
+    ViewBag.OrderID =  Model.order.id_order;
+}
+
+<style>
+    table
+    {   
+        border: 1px solid black;
+    }
+
+    td, th
+    {
+        border: 1px solid black;
+        padding:15px;
+        text-align:center;
+    }
+</style>
+
+
+<h2>Информация о заказах #@ViewBag.OrderID</h2>
+
+<fieldset>
+    <legend>Person</legend>
+    <table id="myclass">
+        <tr>
+            <th>
+                <div class="display-label">
+                    Код заказа:&nbsp;   
+                </div>
+            </th>
+            <td>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.order.id_order)
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <th>
+                <div class="display-label">
+                     Дата принятия заказа:&nbsp;
+                </div>
+            </th>
+            <td>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.order.date)
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <th>
+                <div class="display-label">
+                     Начало:&nbsp;
+                </div>
+            </th>
+            <td>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.order.begin)
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <th>
+                <div class="display-label">
+                     Конец:&nbsp;
+                </div>
+            </th>
+            <td>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.order.end)
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <th>
+                <div class="display-label">
+                     Оплата:&nbsp;
+                </div>
+            </th>
+            <td>       
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.order.payment)
+                </div>
+                @if (!Model.order.payment)
+                { 
+                   @* @Html.ActionLink("Оплачено?", "PaymentTrue", "Home", new { @idOrder111 = @Model.order.id_order}); *@
+                }
+            </td>
+        </tr>
+        <tr>
+            <th>
+                <div class="display-label">
+                     @Html.DisplayNameFor(model => model.order.FIO)
+                </div>
+            </th>
+            <td>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.order.FIO)
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <br/>
+    <br/>
+    <br/>
+        <h2>Номеры:</h2>
+         <table>
+                <tr>
+                    <th>
+                        №комнаты
+                    </th>
+                    <th>
+                        Начало
+                    </th>
+                    <th>
+                        Конец
+                    </th>
+                    <th>
+                        Тип комнаты
+                    </th>                    
+                    <th>
+                        Цена
+                    </th>          
+                </tr>
+                @foreach (var item in Model.ListNumber)
+                {
+                    <tr>
+                        <td>    
+                            @item.number_room
+                        </td>
+                        <td>    
+                            @item.settlement_date
+                        </td>
+                        <td>    
+                            @item.eviction_date
+                        </td>
+                        <td>
+                            @item.type_room
+                        </td>
+                        <td>    
+                            @item.price
+                        </td>
+                    </tr>
+                }
+        </table>
+
+    <br/>
+    <br/>
+    <br/>
+        <h2>Дополнительные услуги включены:</h2>
+        @if (Model.ListServirecs.Count() != 0)
+        {
+            <table>
+                <tr>
+                    <th>
+                        Наименование услуги
+                    </th>
+                    <th>
+                        Количество
+                    </th>
+                    <th>
+                        Дата использования
+                    </th>
+                    <th>
+                        Цена
+                    </th>                    
+                </tr>
+                @foreach (var item in Model.ListServirecs)
+                {
+                    <tr>
+                        <td>    
+                            @item.name_servies
+                        </td>
+                        <td>    
+                            @item.col
+                        </td>
+                        <td>    
+                            @item.DateUse
+                        </td>
+                        <td>    
+                            @item.price
+                        </td>
+                    </tr>
+                }
+            </table>
+        }
+        else
+        {
+            <b style="color:red;">Текущий клиент не заказано</b>
+        }
+        
+    <br/>
+    <br/>
+    <br/>
+    <hr/>
+    <h2>Итоги: @Model.order.BigPrice грн.</h2>
+    <br/>
+    <hr/>
+    @* <h2>@Html.ActionLink("Завершить заказ", "Hide", "Home", new { id = @Model.order.id_order })</h2> *@
+    
+    <br/>
+</fieldset>
+<p>
+    @* @Html.ActionLink("Edit", "Edit", new { id=Model.order.id_order }) | *@
+    @Html.ActionLink("Back to List", "Index")
+</p>

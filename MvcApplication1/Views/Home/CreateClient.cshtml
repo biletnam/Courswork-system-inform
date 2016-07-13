@@ -1,0 +1,67 @@
+﻿@model MvcApplication1.Models.ClientModif
+@{
+    ViewBag.Title = "CreateClient";
+}
+
+<h2>CreateClient</h2>
+<div>
+     @using (Html.BeginForm("AddClient", "Home"))
+     {
+         @Html.ValidationSummary(true)
+         
+         <table style="width: 100%;">
+            <tr>
+                <td>@Html.LabelFor(model => model.FIO)</td>
+                <td>@Html.EditorFor(model=> model.FIO)</td>
+                <td>@Html.ValidationMessageFor(model => model.FIO)</td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(model => model.birthday)</td>
+               
+                <td>@Html.EditorFor(model => model.birthday)</td>
+                <td>@Html.ValidationMessageFor(model => model.birthday)</td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(model => model.pol)</td>
+                <td>
+                    @Html.DropDownListFor(model => model.pol, new[]
+                        {  
+                           new SelectListItem() { Text = "--- Выбрать пол ---", Value = ""},  
+                           new SelectListItem() { Text = "Мужской", Value = "Мужской"},
+                           new SelectListItem() { Text = "Женский", Value = "Женский"},
+                        }
+                    )
+                </td>
+                <td>@Html.ValidationMessageFor(model => model.pol)</td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(model => model.identif)</td>
+                <td>@Html.TextBoxFor(model=> model.identif)</td>
+                <td>@Html.ValidationMessageFor(model => model.identif)</td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(model => model.passport)</td>
+                <td>@Html.TextBoxFor(model=> model.passport)</td>
+                <td>@Html.ValidationMessageFor(model => model.passport)</td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(model => model.address)</td>
+                <td>@Html.TextBoxFor(model=> model.address)</td>
+                <td>@Html.ValidationMessageFor(model => model.address)</td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(model => model.phone)</td>
+                <td>@Html.TextBoxFor(model=> model.phone)</td>
+                <td>@Html.ValidationMessageFor(model => model.phone)</td>
+            </tr>
+            <tr>
+                <td>
+                    <input id="Submit1" type="submit" value="submit" />
+                </td>
+            </tr>
+        </table>
+     }
+    <p>
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</div>

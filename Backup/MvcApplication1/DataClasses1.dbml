@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Database1" Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=(LocalDB)\v11.0;AttachDbFilename=|DataDirectory|\Database1.mdf;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="Database1ConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Client" Member="Client">
+    <Type Name="Client">
+      <Column Name="Id_client" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FIO" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="birthday" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="pol" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="identif" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="passport" Type="System.String" DbType="NChar(100)" CanBeNull="true" />
+      <Column Name="address" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="phone" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Client_Orders" Member="Orders" ThisKey="Id_client" OtherKey="id_client" Type="Orders" />
+    </Type>
+  </Table>
+  <Table Name="dbo.type_servies" Member="type_servies">
+    <Type Name="type_servies">
+      <Column Name="Id_servies" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="tariff" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="type_servies_list_add_services" Member="list_add_services" ThisKey="Id_servies" OtherKey="id_servies" Type="list_add_services" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Personal" Member="Personal">
+    <Type Name="Personal">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FIO" Type="System.String" DbType="NChar(100)" CanBeNull="true" />
+      <Column Name="dolgnost" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="login" Type="System.String" DbType="NChar(100)" CanBeNull="true" />
+      <Column Name="password" Type="System.String" DbType="NChar(100)" CanBeNull="true" />
+      <Column Name="admin" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.type_pool" Member="type_pool">
+    <Type Name="type_pool">
+      <Column Name="Id_pool" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="type" Type="System.String" DbType="NChar(100)" CanBeNull="true" />
+      <Column Name="tariff" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="type_pool_type_number" Member="type_number" ThisKey="Id_pool" OtherKey="id_pool" Type="type_number" />
+    </Type>
+  </Table>
+  <Table Name="dbo.nametyperoom" Member="nametyperoom">
+    <Type Name="nametyperoom">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
+    </Type>
+  </Table>
+  <Table Name="dbo.list_number" Member="list_number">
+    <Type Name="list_number">
+      <Column Name="Id_list_number" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="id_order" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="id_type_room" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="id_col_in_room" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="id_number_room" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="col" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="settlement_date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="eviction_date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="price" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.list_add_services" Member="list_add_services">
+    <Type Name="list_add_services">
+      <Column Name="Id_list_add_services" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="id_order" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="id_servies" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DateUse" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="col" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="price" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="type_servies_list_add_services" Member="type_servies" ThisKey="id_servies" OtherKey="Id_servies" Type="type_servies" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.type_number" Member="type_number">
+    <Type Name="type_number">
+      <Column Name="Id_number" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NChar(100)" CanBeNull="true" />
+      <Column Name="col" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="id_pool" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Free" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="type_number_Orders" Member="Orders" ThisKey="Id_number" OtherKey="id_number" Type="Orders" />
+      <Association Name="type_pool_type_number" Member="type_pool" ThisKey="id_pool" OtherKey="Id_pool" Type="type_pool" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Orders" Member="Orders">
+    <Type Name="Orders">
+      <Column Name="Id_order" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="[begin]" Member="begin" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="[end]" Member="end" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="payment" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="id_client" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="id_number" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="BigPrice" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Done" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Hide" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="Client_Orders" Member="Client" ThisKey="id_client" OtherKey="Id_client" Type="Client" IsForeignKey="true" />
+      <Association Name="type_number_Orders" Member="type_number" ThisKey="id_number" OtherKey="Id_number" Type="type_number" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>

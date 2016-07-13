@@ -1,0 +1,63 @@
+﻿@model IEnumerable<MvcApplication1.Models.OrderModific>
+@{
+    ViewBag.Title = "Exp";
+}
+
+<h2>Exp</h2>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<div>
+   Список заказов 
+</div>
+<table  border="1" style="border:1px solid black; padding:10px;" cellspacing="10" cellpadding="20">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.id_order)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.begin)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.end)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.payment)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FIO)
+        </th>                
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td align="center">
+            @Html.DisplayFor(modelItem => item.id_order)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.begin)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.end)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.payment)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FIO)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.id_order }) |
+            @Html.ActionLink("Details", "Details", new { id=item.id_order }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.id_order })
+        </td>
+    </tr>
+} 
+</table> 

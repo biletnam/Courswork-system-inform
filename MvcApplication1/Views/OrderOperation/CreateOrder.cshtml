@@ -1,0 +1,49 @@
+﻿@model MvcApplication1.Models.ComplexModelClientAndServies
+@{
+    ViewBag.Title = "CreateOrder";
+}
+
+<h2 align="center">Создание заказа</h2>
+
+@if (ViewBag.Id_client == null)
+{
+    using (Html.BeginForm("ProcessingOrder", "OrderOperation"))
+    { 
+        <table>
+            <tr>
+                <td>
+                    Выбрать клиента:
+                </td>
+                <td>
+                    @Html.DropDownList("Id_client", new SelectList(Model.ListClient, "Id_client", "FIO"), " --- Выберите --- ", new { onchange = @"this.form.submit();" }) 
+                </td>
+            </tr>
+        </table>
+    }
+}
+else
+{
+    <p>@ViewBag.Id_client &nbsp @ViewBag.NameClient</p>
+    
+    using (Html.BeginForm("ProcessingOrder", "OrderOperation"))
+    { 
+        //Заказ
+         <table>
+            <tr>
+                <td>
+                    Тип комнаты:
+                </td>
+                <td>
+                    @Html.DropDownList("Id_pool", new SelectList(Model.ListTypePool, "Id_pool", "type"), " --- Выберите --- ", new { onchange = @"this.form.submit();" }) 
+                </td>
+            </tr>
+        </table>
+    }
+    
+        //Услуги
+    
+}
+
+<p>
+    @Html.ActionLink("Back to List", "Index", "Home")
+</p>

@@ -1,0 +1,57 @@
+﻿@model List<MvcApplication1.Models.TypeNumberModifString>
+@{
+    ViewBag.Title = "ListRoom";
+}
+
+<h2>Сводный список комнат</h2>
+
+<table border="1">
+    <tr border="1">
+        <th>
+            n/n
+        </th>
+        <th>
+            Номер комнаты
+        </th>
+        <th>
+            Тип комнаты
+        </th>
+        <th>
+            Количесто человек в комнате
+        </th>
+        <th>
+            Свободный номер
+        </th>
+    </tr>
+    
+    @foreach(var item in Model)
+    {
+        <tr>
+            <td>
+                @item.nn
+            </td>
+            <td>
+                @item.name.ToString()
+            </td>
+            <td>
+                @item.type
+            </td>
+            <td>
+                @item.col.ToString()
+            </td>                        
+            <td>
+                @if(item.Free) 
+                {
+                    ViewBag.Res = "Свободен";
+                    <b>@ViewBag.Res</b>
+                }
+                else
+                {
+                    ViewBag.Res = "Занято";
+                    <b style="color:red;">@ViewBag.Res</b>
+                }
+                
+            </td>            
+        </tr>
+    }
+</table>

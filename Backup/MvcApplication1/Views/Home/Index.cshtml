@@ -1,0 +1,88 @@
+﻿@model IEnumerable<MvcApplication1.Models.OrderModific>
+@{
+    ViewBag.Title = "Домашняя страница";
+}
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1>@ViewBag.Title.</h1>
+            </hgroup>
+            <p>
+                Корпоративная система "Гостиница", версия 1.0.0.0
+            </p>
+        </div>
+    </section>
+}
+
+<style>
+    table
+    {   
+        border: 1px solid black;
+    }
+
+    td, th
+    {
+        border: 1px solid black;
+        padding:15px;
+        text-align:center;
+    }
+
+</style>
+
+@if (Request.IsAuthenticated) {
+    <text>
+        Здравствуйте, @Html.ActionLink(User.Identity.Name, "Manage", "Account", routeValues: null, htmlAttributes: new { @class = "username", title = "Управление" })!
+        @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" })) {
+            @Html.AntiForgeryToken()
+            <a href="javascript:document.getElementById('logoutForm').submit()">Выйти</a>
+        }
+    </text>
+<p>
+    @Html.ActionLink("Новый клиент", "CreateClient", "Home") <br/>
+</p>
+<p>    
+    @Html.ActionLink("Новый заказ", "Create") <br/>
+</p>
+<p>    
+    @Html.ActionLink("Регистрация тарифов номеров и дополнительных услуг", "CreateTariff", "Tariff")
+</p>
+<p>
+    @Html.ActionLink("Список свободных комнат", "ListRoom", "Room");
+</p>    
+<hr/>
+    <h2>Текущие заказы:</h2>
+<div>
+   <h3>Список заказов</h3>
+</div>
+@Html.Action("ShowOrder", "Home");
+                                 
+    
+
+    <br/><br/><br/>
+            
+    <div>
+         @Html.ActionLink("Формирование отчетов", "Report")
+    </div>
+    
+}
+else
+{
+    <h3>Рекомендуются следующие действия:</h3>
+    <ol class="round">
+        <li class="one">
+            <h5>Приступая к работе</h5>
+                Чтоб приступить работу, то Вам необходимо войти в систему. Если у Вас нет аккаунта, то Вам нужно регистрировать.
+        </li>
+
+        <li class="two">
+            <h5>Проблемы?</h5>
+                Если возникли проблемы или неполадки, то свяжитесь с администратором
+        </li>
+
+        <li class="three">
+            <h5>Тут может быть реклама</h5>
+                Этот вопрос к менеджеру гостиницы        
+        </li>
+    </ol>
+}

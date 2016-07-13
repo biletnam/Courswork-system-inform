@@ -1,0 +1,124 @@
+﻿@model MvcApplication1.Models.ComplexRoomsAndServiecs
+@{
+    ViewBag.Title = "CreateTariff";
+}
+
+<style type="text/css">
+    .mytable {
+       border:1px solid black;
+       text-align:center;
+    }
+</style>
+
+<h2>Тарификация</h2>
+
+<div align="center">
+    <div>
+        <hr/>
+        <h2>Тариф услуг</h2>
+            <table>
+                @foreach(var item in Model.ListServies)
+                {
+                    if (ViewBag.OpenEditServiecId == @item.Id_servies)
+                    {
+                        using (Html.BeginForm("EditServies1111", "Tariff", new { id = @item.Id_servies }))
+                        {
+                            <tr>
+                                <td>
+                                    @item.name
+                                </td>
+                                <td>
+                                    @* @Html.TextBoxFor(model => model.TypeServies.tariff, new { @Value = ViewBag.OpenEditServiesValue }) *@
+                                    @Html.TextBox("tariff", null, new { @Value = ViewBag.OpenEditServiesValue })
+                                </td>
+                                <td>
+                                    <input type="submit" name="submit" value="Принять" />
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Отмена", "CreateTariff")                              
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td>
+                                @item.name
+                            </td>
+                            <td>
+                                @item.tariff
+                            </td>
+                            <td>
+                                @Html.ActionLink("Редактировать", "EditServiecTariff", new { @id_serviec = @item.Id_servies, @price = @item.tariff })                              
+                            </td>
+                        </tr>
+                    }
+                }
+            </table>
+    </div>
+    <hr/>
+    <h2>Тариф номеров</h2>
+    <div>
+        @*
+            <table>
+                @foreach(var item in Model.ListRoom)
+                {
+                    <tr>
+                        <td>
+                            @item.type
+                        </td>
+                        <td>
+                            @item.tariff
+                        </td>
+                        <td>
+                            @Html.ActionLink("Редактировать", "EditRoomTariff", new { @Id_room = @item.Id_pool });
+                        </td>
+                    </tr>
+                }
+            </table>
+        *@
+        <table>
+                @foreach (var item in Model.ListRoom)
+                {
+                    if (ViewBag.OpenEditRoomId == @item.Id_pool)
+                    {
+                        using (Html.BeginForm("EditRoom", "Tariff", new { @Id_pool = @item.Id_pool }))
+                        {
+                            <tr>
+                                <td>
+                                    @item.type
+                                </td>
+                                <td>
+                                    @* @Html.TextBoxFor(model => model.TypeServies.tariff, new { @Value = ViewBag.OpenEditServiesValue }) *@
+                                    @Html.TextBox("tariff", null, new { @Value = ViewBag.OpenEditRoomValue })
+                                </td>
+                                <td>
+                                    <input type="submit" name="submit" value="Принять" />
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Отмена", "CreateTariff")                              
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td>
+                                @item.type
+                            </td>
+                            <td>
+                                @item.tariff
+                            </td>
+                            <td>
+                                @Html.ActionLink("Редактировать", "EditRoomTariff", new { @Id_pool = @item.Id_pool, @price = @item.tariff })                              
+                            </td>
+                        </tr>
+                    }
+                }
+            </table>
+    </div>
+    <br /><br />
+    @Html.ActionLink("Back to List", "Index", "Home")
+</div>

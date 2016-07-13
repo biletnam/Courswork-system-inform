@@ -1,0 +1,102 @@
+﻿@model MvcApplication1.Models.ForReport.ComplexModels
+@{
+    ViewBag.Title = "Report";
+}
+
+<h2>Report</h2>
+
+<div>
+    <table>
+        <tr>
+            <td>
+                <div>
+                    <p><b>Цена дополнительных услуг (грн.):</b></p>
+                    <ul>
+                        @foreach(var item in @Model.listServiecs)
+                        {
+                            <li>@item.name : @item.tariff грн</li>
+                        }
+                    </ul>
+                <div>
+                <div>
+                    <p><b>Цена номеров (грн. в сутки):</b></p>
+                    <ul>
+                        @foreach(var item in @Model.listNumber)
+                        {
+                            <li>@item.type : @item.tariff грн</li>
+                        }
+                    </ul>
+                </div>
+            </td>
+            <td>
+                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+            </td>
+        <!--
+        </tr>
+        <tr>
+            -->
+            <td>
+                <div>
+                    <p><b>Итоги:</b></p>
+                    Количество общих заказов:   @Model.GeneralOrdersCount<br />
+                    Сумма общих заказов:    @Model.GeneralOrdersSum грн.<br />
+                    Количество текущих заказов:    @Model.CurrentOrdersCount<br />
+                    Сумма текущих заказов:   @Model.CurrentOrdersSum грн.<br />
+                    Количество завершающих заказов:   @Model.EndOrdersCount<br />
+                    Сумма завершающих заказов:   @Model.EndOrdersSum грн.<br />
+                    Количество неоплачиваемых заказов:   @Model.OrdersCountNotPayment<br />
+                    Сумма неоплачивающих заказов:   @Model.OrdersSumNotPayment грн.<br />
+                    Количество оплачиваемых заказов:   @Model.OrdersCountPayment<br />
+                    Сумма оплачивающих заказов:   @Model.OrdersSumPayment грн.<br />
+                    <br/>
+                    <br/>
+                </div>
+            </td>
+            <td>
+                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+            </td>
+        <!--
+        </tr>
+        <tr>
+            -->
+            <td>
+                <div>
+                    <p><b>Кол. предоставлены дополнительных услуг:</b></p>
+                    Предоставили услуг в заказе:  @Model.ServiecsOnInOrderCount <br/>
+                    Общий количество услуг:  @Model.GeneralServiecs <br/>
+                    Сумма всего услуг:  @Model.ServiecsSum грн.<br/>
+                    <br/>
+
+                    <p><b>Клиенты:</b></p>
+                    Количество регистрационных клиентов: @Model.ClientCount<br/>
+                    "Постоянные" клиенты (5 и более заказов): @Model.ClientConstCount<br/>
+                    Клиенты-халявчики: @Model.ClientNotPaymentCount<br/>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <b>Список "постоянных" клиентов:</b>
+                <ol>
+                @foreach (var item in @Model.listClientConst)
+                { 
+                    <li>@item.FIO</li>
+                }
+                </ol>
+            </td>
+            <td>
+                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+            </td>
+            <td>
+                <b>Список уклоняющих клиентов:</b>
+                <ol>
+                @foreach (var item in @Model.listClientNotPayment)
+                { 
+                    <li>@item.FIO</li>
+                }
+                </ol>
+            </td>
+        </tr>
+    </table>
+</div>
+

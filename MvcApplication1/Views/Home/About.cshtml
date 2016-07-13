@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Title = "О программе";
+}
+
+<hgroup class="title">
+    <h1>@ViewBag.Title.</h1>
+</hgroup>
+
+<article>
+    <p>
+        Разработал студент группы 651п Чернобривец Андрей, ХАИ
+    </p>
+
+    <p>
+        Среда разработки Visual Studio 2010
+    </p>
+
+    <p>
+        приложение ASP.NET MVC
+    </p>
+</article>
+
+<aside>
+    <h3>Заголовок боковой панели</h3>
+    <p>
+        В этой области можно указать дополнительные сведения.
+    </p>
+    <ul>
+        <li>@Html.ActionLink("Домашняя страница", "Index", "Home")</li>
+        <li>@Html.ActionLink("О программе", "About", "Home")</li>
+        <li>@Html.ActionLink("Контакт", "Contact", "Home")</li>
+    </ul>
+</aside>

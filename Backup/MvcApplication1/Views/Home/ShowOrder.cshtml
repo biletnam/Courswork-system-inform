@@ -1,0 +1,69 @@
+﻿@model IEnumerable<MvcApplication1.Models.OrderModific>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<table  border="1" style="border:1px solid black; padding:10px;" cellspacing="10" cellpadding="30">
+    <tr>
+        <th>
+            Код заказа
+        </th>
+        <th>
+            ФИО клиента
+        </th>
+        <th>
+            Дата принятия заказа
+        </th>
+        <th>
+            Начало заказа (вселение)
+        </th>
+        <th>
+            Конец заказа (выселение)
+        </th>
+        <th>
+            Общая цена
+        </th>
+        <th>
+            Оплата
+        </th>
+        <th>
+            Завершить заказ
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td align="center">
+            @Html.DisplayFor(modelItem => item.id_order)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FIO)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.begin)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.end)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BigPrice)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.payment)
+        </td>
+        <td>
+            @Html.ActionLink("Завершить", "Hide", new { id=item.id_order }) 
+        </td>
+        <td>
+            @* @Html.ActionLink("Редактирование", "Edit", new { id=item.id_order }) | *@
+            @Html.ActionLink("Подробности", "Details", new { id=item.id_order }) 
+            @* @Html.ActionLink("Удалить", "Delete", new { id=item.id_order })  *@
+        </td>
+    </tr>
+} 
+</table> 
